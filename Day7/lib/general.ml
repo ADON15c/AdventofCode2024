@@ -17,9 +17,9 @@ let process_input filename =
   |> List.map (fun xs -> (List.hd xs, List.tl xs))
 
 
-let add_mult x list = List.concat_map (fun a -> [a+x;a*x]) list
+let apply_operations x list fns = List.concat_map (fun a -> List.map (fun fn -> fn a x) fns) list
 
-let all_combinations list = 
+let all_combinations list fns = 
   match list with
   | [] -> []
-  | h :: t -> List.fold_left (fun acc v -> add_mult v acc) [h] t
+  | h :: t -> List.fold_left (fun acc v -> apply_operations v acc fns) [h] t
